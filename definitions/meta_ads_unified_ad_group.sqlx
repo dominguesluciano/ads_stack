@@ -1,0 +1,39 @@
+config {
+  type: "table",
+  bigquery: {
+    partitionBy: "date"
+  },
+  tags: ["daily"]
+}
+
+CREATE OR REPLACE TABLE
+  `liquid-fort-401013.dtf_ads_reporting_ad_group_lvl.meta_unified_ad_group` AS
+SELECT
+  'Meta Ads' AS data_source,
+  p.date,
+  CAST(p.adset_id AS INT64) AS ad_group_id,
+  CASE
+    WHEN REGEXP_CONTAINS(p.adset_name,"(?i).*BOV.*") THEN "BOV"
+    WHEN REGEXP_CONTAINS(p.adset_name,"(?i).*SYB.*") THEN "SYB"
+  ELSE
+  "check"
+END
+  AS ad_group_name,
+  p.campaign_name,
+  SUM(p.impressions) AS impressions,
+  SUM(p.inline_link_clicks) AS clicks,
+  SUM(p.spend) AS cost,
+  COUNT(c._1_d_click) AS conversions
+FROM
+  `liquid-fort-401013.facebook_ads.meta_ads_basic_ad_set` p
+LEFT JOIN
+  `liquid-fort-401013.facebook_ads.meta_ads_basic_ad_set_actions` c
+ON
+  p.adset_id = c.adset_id
+  AND c.action_type = 'onsite_web_lead'
+  AND p.date = c.date
+GROUP BY
+  p.date,
+  p.adset_id,
+  p.adset_name,
+  p.campaign_name

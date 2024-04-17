@@ -1,0 +1,6 @@
+{
+  "name": "ads_stack",
+  "dependencies": {
+    "@dataform/core": "2.8.3"
+  }
+}

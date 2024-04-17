@@ -1,0 +1,32 @@
+config {
+  type: "table",
+  bigquery: {
+    partitionBy: "date"
+  },
+  tags: ["daily"]
+}
+CREATE OR REPLACE TABLE `liquid-fort-401013.dtf_ads_reporting_ad_group_lvl.google_ads_unified_ad_group` AS
+SELECT
+  'Google Ads' AS data_source,
+  CAST(p._PARTITIONDATE AS DATE) AS date,
+  p.ad_group_id,
+  CASE
+  WHEN REGEXP_CONTAINS(a.ad_group_name,"(?i).*valuation.*") THEN "BOV"
+  WHEN REGEXP_CONTAINS(a.ad_group_name,"(?i).*selling.*") THEN "SYB"
+  ELSE "check"
+  END as ad_group_name,
+  c.campaign_name,
+  SUM(p.metrics_impressions) AS impressions,
+  SUM(p.metrics_clicks) AS clicks,
+  SUM(p.metrics_cost_micros) / 1000000 AS cost,
+  NULL AS conversions
+FROM `liquid-fort-401013.google_ads.p_ads_AdGroupBasicStats_1855871242` AS p
+JOIN `liquid-fort-401013.google_ads.p_ads_AdGroup_1855871242` AS a
+  ON p.ad_group_id = a.ad_group_id
+JOIN `liquid-fort-401013.google_ads.p_ads_Campaign_1855871242` AS c
+  ON a.campaign_id = c.campaign_id
+GROUP BY
+  CAST(p._PARTITIONDATE AS DATE),
+  p.ad_group_id,
+  a.ad_group_name,
+  c.campaign_name
