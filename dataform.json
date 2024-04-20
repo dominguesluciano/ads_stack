@@ -1,5 +1,5 @@
 {
-  "defaultSchema": "liquid-fort-401013.dtf_ads_reporting.google_ads_unified_ad_group",
+  "defaultSchema": "liquid-fort-401013.dtf_ads_reporting",
   "assertionSchema": "dataform_assertions",
   "warehouse": "bigquery",
   "defaultDatabase": "liquid-fort-401013",
