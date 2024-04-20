@@ -1,0 +1,16 @@
+config {
+    type: "table",
+}
+
+SELECT
+  data_source,
+  date,
+  ad_group_id,
+  ad_group_name,
+  campaign_name,
+  SUM(impressions) AS impressions,
+  SUM(clicks) AS clicks,
+  SUM(cost) AS cost,
+  SUM(conversions) AS conversions
+FROM
+  ${ref(ads_reporting)}
