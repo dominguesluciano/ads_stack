@@ -1,21 +1,14 @@
 config {
-    type: "table",
-    bigquery: {
-        partitionBy: "date"
-    },
-    tags: ["daily"]
+  type: "table",
+  schema: "dtf_ads_reporting",
+  name: "meta_unified_ad_group",
+  database: "liquid-fort-401013",
+  bigquery: {
+    partitionBy: "date"
+  },
+  tags: ["daily"]
 }
 
-INSERT INTO
-  `liquid-fort-401013.dtf_ads_reporting_ad_group_lvl.meta_unified_ad_group` (data_source,
-    date,
-    ad_group_id,
-    ad_group_name,
-    campaign_name,
-    impressions,
-    clicks,
-    cost,
-    conversions)
 SELECT
   'Meta Ads' AS data_source,
   p.date,

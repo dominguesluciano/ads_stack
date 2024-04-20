@@ -9,10 +9,6 @@ config {
   tags: ["daily"]
 }
 
--- Drop the existing table if it exists
-
--- Create the new table with partitioning
-
 SELECT
   'Google Ads' AS data_source,
   CAST(p._PARTITIONDATE AS DATE) AS date,
