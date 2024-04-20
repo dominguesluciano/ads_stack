@@ -8,7 +8,6 @@ config {
   },
   tags: ["daily"]
 }
-
 SELECT
   'Meta Ads' AS data_source,
   p.date,
