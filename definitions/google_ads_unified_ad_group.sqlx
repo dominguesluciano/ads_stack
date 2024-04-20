@@ -1,11 +1,14 @@
 config {
   type: "table",
+  schema: "dtf_ads_reporting",
+  name: "google_ads_unified_ad_group",
+  database: "liquid-fort-401013",
   bigquery: {
     partitionBy: "date"
   },
   tags: ["daily"]
 }
-CREATE OR REPLACE TABLE `liquid-fort-401013.dtf_ads_reporting_ad_group_lvl.google_ads_unified_ad_group` AS
+
 SELECT
   'Google Ads' AS data_source,
   CAST(p._PARTITIONDATE AS DATE) AS date,
@@ -19,7 +22,7 @@ SELECT
   SUM(p.metrics_impressions) AS impressions,
   SUM(p.metrics_clicks) AS clicks,
   SUM(p.metrics_cost_micros) / 1000000 AS cost,
-  NULL AS conversions
+  SUM(metrics_conversions) AS conversions
 FROM `liquid-fort-401013.google_ads.p_ads_AdGroupBasicStats_1855871242` AS p
 JOIN `liquid-fort-401013.google_ads.p_ads_AdGroup_1855871242` AS a
   ON p.ad_group_id = a.ad_group_id
