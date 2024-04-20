@@ -1,10 +1,14 @@
 config {
   type: "table",
+  schema: "dtf_ads_reporting",
+  name: "google_ads_unified_ad_group",
+  database: "liquid-fort-401013",
   bigquery: {
     partitionBy: "date"
   },
   tags: ["daily"]
 }
+
 -- Drop the existing table if it exists
 
 -- Create the new table with partitioning
