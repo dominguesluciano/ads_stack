@@ -8,8 +8,6 @@ config {
 -- Drop the existing table if it exists
 
 -- Create the new table with partitioning
-CREATE TABLE `liquid-fort-401013.dtf_ads_reporting_ad_group_lvl.google_ads_unified_ad_group`
-AS
 
 SELECT
   'Google Ads' AS data_source,
