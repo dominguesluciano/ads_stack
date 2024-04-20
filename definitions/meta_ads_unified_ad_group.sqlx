@@ -1,13 +1,21 @@
 config {
-  type: "table",
-  bigquery: {
-    partitionBy: "date"
-  },
-  tags: ["daily"]
+    type: "table",
+    bigquery: {
+        partitionBy: "date"
+    },
+    tags: ["daily"]
 }
 
-CREATE OR REPLACE TABLE
-  `liquid-fort-401013.dtf_ads_reporting_ad_group_lvl.meta_unified_ad_group` AS
+INSERT INTO
+  `liquid-fort-401013.dtf_ads_reporting_ad_group_lvl.meta_unified_ad_group` (data_source,
+    date,
+    ad_group_id,
+    ad_group_name,
+    campaign_name,
+    impressions,
+    clicks,
+    cost,
+    conversions)
 SELECT
   'Meta Ads' AS data_source,
   p.date,
@@ -32,6 +40,8 @@ ON
   p.adset_id = c.adset_id
   AND c.action_type = 'onsite_web_lead'
   AND p.date = c.date
+WHERE
+  p.date = DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
 GROUP BY
   p.date,
   p.adset_id,

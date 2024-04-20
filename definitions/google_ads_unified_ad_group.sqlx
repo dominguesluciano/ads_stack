@@ -5,7 +5,14 @@ config {
   },
   tags: ["daily"]
 }
-CREATE OR REPLACE TABLE `liquid-fort-401013.dtf_ads_reporting_ad_group_lvl.google_ads_unified_ad_group` AS
+-- Drop the existing table if it exists
+DROP TABLE IF EXISTS `liquid-fort-401013.dtf_ads_reporting_ad_group_lvl.google_ads_unified_ad_group`;
+
+-- Create the new table with partitioning
+CREATE TABLE `liquid-fort-401013.dtf_ads_reporting_ad_group_lvl.google_ads_unified_ad_group`
+PARTITION BY DATE(date)
+AS
+
 SELECT
   'Google Ads' AS data_source,
   CAST(p._PARTITIONDATE AS DATE) AS date,

@@ -2,7 +2,8 @@ config {
   type: "table",
   bigquery: {
     partitionBy: "date"
-  }
+  },
+  tags: ["daily"]
 }
 CREATE OR REPLACE TABLE `liquid-fort-401013.dtf_ads_reporting_ad_group_lvl.unified_ad_data` AS
 SELECT *
