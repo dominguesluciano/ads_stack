@@ -9,7 +9,6 @@ config {
   tags: ["daily"]
 }
 
-CREATE OR REPLACE TABLE `liquid-fort-401013.dtf_ads_reporting_ad_group_lvl.unified_ad_data` AS
 SELECT *
 FROM `liquid-fort-401013.dtf_ads_reporting_ad_group_lvl.google_ads_unified_ad_group`
 UNION ALL
